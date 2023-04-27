@@ -1,15 +1,13 @@
-package com.calpyte.user.dto.pagination;
+package com.calpyte.user.utils;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
-public class TableResponseDTO {
+public class TableResponse {
     private Integer draw;
     private Object recordsTotal;
     private Object recordsFiltered;
