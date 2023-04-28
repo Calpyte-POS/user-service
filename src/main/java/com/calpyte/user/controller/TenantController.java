@@ -1,18 +1,15 @@
 package com.calpyte.user.controller;
 
-import com.calpyte.user.dto.Pagination;
+import com.calpyte.user.dto.pagination.PaginationDTO;
+import com.calpyte.user.dto.pagination.TableResponseDTO;
 import com.calpyte.user.entity.Tenant;
 import com.calpyte.user.service.TenantService;
-import com.calpyte.user.utils.TableResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/tenant")
@@ -27,7 +24,7 @@ public class TenantController {
     }
 
     @PostMapping("/paging")
-    public ResponseEntity<TableResponse> getAll(@RequestBody Pagination pagination){
+    public ResponseEntity<TableResponseDTO> getAll(@RequestBody PaginationDTO pagination){
         return ResponseEntity.ok(tenantService.getAll(pagination));
     }
 }
