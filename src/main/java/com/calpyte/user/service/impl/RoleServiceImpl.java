@@ -11,6 +11,7 @@ import com.calpyte.user.dto.pagination.TableResponseDTO;
 import com.calpyte.user.entity.Role;
 import com.calpyte.user.exceptions.CustomValidationException;
 import com.calpyte.user.service.RoleService;
+import com.calpyte.user.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -47,14 +49,36 @@ public class RoleServiceImpl implements RoleService {
         return roleDAO.save(role);
     }
 
+    @Override
+    public List<Role> saveAllRoles(List<Role> roles) {
+        return roleDAO.saveAll(roles);
+    }
 
+    @Override
+    public Role findById(String id){
+        Optional<Role> roleOptional = roleDAO.findById(id);
+        if(roleOptional.isPresent()) {
+            return Mapper.map(roleOptional.get(), Role.class);
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(String id){
+        Optional<Role> roleOptional = roleDAO.findById(id);
+        if(roleOptional.isPresent()) {
+            Role role = roleOptional.get();
+            role.setIsDeleted(true);
+            roleDAO.save(role);
+        }
+    }
 
     @Override
     public TableResponseDTO getRoles(PaginationDTO pagination) {
         TableResponseDTO response;
         BaseSpecification roleSpecification = new BaseSpecification(mongoTemplate);
         Pageable paging = PageRequest.of(pagination.getPageNo() - 1, pagination.getPageSize());
-        params.clear();
+//        params.clear();
         List<SearchCriteria> searchCriteria = pagination.getFilter();
         Page<Role> rolePage = roleSpecification.getAll(searchCriteria,paging,Role.class);
         if (rolePage.hasContent()) {
@@ -67,7 +91,12 @@ public class RoleServiceImpl implements RoleService {
         }
         return response;
     }
+
+    @Override
+    public List<Role> findAll() {
+        return roleDAO.findAll();
     }
+}
 
 
 
