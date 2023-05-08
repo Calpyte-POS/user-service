@@ -26,19 +26,31 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
+    public List<Role> saveAll(List<Role> roles) {
+        return roleRepository.saveAll(roles);
+    }
+
+    @Override
     public Role save(Role role) {
         return roleRepository.save(role);
     }
 
 
     @Override
+    public Optional<Role> findById(String id) { return roleRepository.findById(id);}
+
+    @Override
+    public Page<Role> findPagination(Pageable pageable) {
+        return roleRepository.findAll(pageable);
+    }
+
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
     @Override
-    public Optional<Role> findById(String id) {
-        return roleRepository.findById(id);
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 
 

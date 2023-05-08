@@ -27,21 +27,12 @@ public class UserController {
         return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
-    @GetMapping("/by-id")
-    public ResponseEntity<User> findById(@RequestParam("id") String id){
-        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
-    }
 
-    @PostMapping("/paging")
-    public ResponseEntity<TableResponseDTO> getAll(@RequestBody PaginationDTO pagination){
-        return ResponseEntity.ok(userService.getUsers(pagination));
-    }
+//    @PostMapping("/paging")
+//    public ResponseEntity<TableResponseDTO> getAll(@RequestBody PaginationDTO pagination){
+//        return ResponseEntity.ok(userService.getUsers(pagination));
+//    }
 
-        @RequestMapping(value = "/delete", method = RequestMethod.GET)
-        public ResponseEntity<User> delete(@RequestParam("id") String id) {
-        userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     @PostMapping(value = "")
     public ResponseEntity<TableResponseDTO> getUsers(@RequestBody PaginationDTO pagination){

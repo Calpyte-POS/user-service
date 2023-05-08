@@ -22,8 +22,5 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> findById(String id){ return userRepository.findById(id);}
-
-    @Override
     public Page<User> findPagination(Pageable pageable) { return userRepository.findAll(pageable);}
 }
