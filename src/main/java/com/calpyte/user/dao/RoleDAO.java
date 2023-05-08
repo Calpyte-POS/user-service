@@ -2,11 +2,10 @@ package com.calpyte.user.dao;
 
 
 import com.calpyte.user.entity.Role;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RoleDAO {
@@ -14,6 +13,8 @@ public interface RoleDAO {
 
     Role save(Role role);
 
-    public Page<Role> findPagination(Pageable pageable);
 
-}   
+    List<Role> getAllRoles();
+
+    Optional<Role> findById(String id);
+}

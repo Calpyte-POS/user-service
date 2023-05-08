@@ -4,13 +4,16 @@ package com.calpyte.user.service.impl;
 import com.calpyte.user.Specification.BaseSpecification;
 import com.calpyte.user.dao.RoleDAO;
 
+import com.calpyte.user.dto.WarehouseDTO;
 import com.calpyte.user.dto.pagination.PaginationDTO;
 import com.calpyte.user.dto.pagination.SearchCriteria;
 import com.calpyte.user.dto.pagination.TableResponseDTO;
 
 import com.calpyte.user.entity.Role;
+import com.calpyte.user.entity.Warehouse;
 import com.calpyte.user.exceptions.CustomValidationException;
 import com.calpyte.user.service.RoleService;
+import com.calpyte.user.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -67,7 +71,30 @@ public class RoleServiceImpl implements RoleService {
         }
         return response;
     }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleDAO.getAllRoles();
     }
+
+    @Override
+    public Role findById(String id) {
+        Optional<Role> roleOptional = roleDAO.findById(id);
+        if (roleOptional.isPresent()) {
+            return Mapper.map(roleOptional.get(), Role.class);
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(String id) {
+        Optional<Role> roleOptional = roleDAO.findById(id);
+        if (roleOptional.isPresent()) {
+            Role role = roleOptional.get();
+            roleDAO.save(role);
+        }
+    }
+}
 
 
 

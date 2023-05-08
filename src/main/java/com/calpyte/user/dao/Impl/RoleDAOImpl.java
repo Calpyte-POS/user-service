@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,9 +30,15 @@ public class RoleDAOImpl implements RoleDAO {
         return roleRepository.save(role);
     }
 
+
     @Override
-    public Page<Role> findPagination(Pageable pageable) {
-        return roleRepository.findAll(pageable);
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+
+    @Override
+    public Optional<Role> findById(String id) {
+        return roleRepository.findById(id);
     }
 
 
