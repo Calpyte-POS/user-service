@@ -35,12 +35,17 @@ public class RoleDAOImpl implements RoleDAO {
         return roleRepository.save(role);
     }
 
+
     @Override
     public Optional<Role> findById(String id) { return roleRepository.findById(id);}
 
     @Override
     public Page<Role> findPagination(Pageable pageable) {
         return roleRepository.findAll(pageable);
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 
     @Override

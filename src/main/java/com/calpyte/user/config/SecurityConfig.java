@@ -30,6 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/role/**").permitAll()
                 .antMatchers("/warehouse/**").permitAll()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/capabilities/**").permitAll()
+                .antMatchers("/category/**").permitAll()
+                .antMatchers("/sub-category/**").permitAll()
+                .antMatchers("/product/**").permitAll()
                 .anyRequest().authenticated();
     }
 }

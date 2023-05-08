@@ -4,11 +4,13 @@ package com.calpyte.user.service.impl;
 import com.calpyte.user.Specification.BaseSpecification;
 import com.calpyte.user.dao.RoleDAO;
 
+import com.calpyte.user.dto.WarehouseDTO;
 import com.calpyte.user.dto.pagination.PaginationDTO;
 import com.calpyte.user.dto.pagination.SearchCriteria;
 import com.calpyte.user.dto.pagination.TableResponseDTO;
 
 import com.calpyte.user.entity.Role;
+import com.calpyte.user.entity.Warehouse;
 import com.calpyte.user.exceptions.CustomValidationException;
 import com.calpyte.user.service.RoleService;
 import com.calpyte.user.util.Mapper;
@@ -54,24 +56,6 @@ public class RoleServiceImpl implements RoleService {
         return roleDAO.saveAll(roles);
     }
 
-    @Override
-    public Role findById(String id){
-        Optional<Role> roleOptional = roleDAO.findById(id);
-        if(roleOptional.isPresent()) {
-            return Mapper.map(roleOptional.get(), Role.class);
-        }
-        return null;
-    }
-
-    @Override
-    public void delete(String id){
-        Optional<Role> roleOptional = roleDAO.findById(id);
-        if(roleOptional.isPresent()) {
-            Role role = roleOptional.get();
-            role.setIsDeleted(true);
-            roleDAO.save(role);
-        }
-    }
 
     @Override
     public TableResponseDTO getRoles(PaginationDTO pagination) {
@@ -94,7 +78,29 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> findAll() {
-        return roleDAO.findAll();
+        return roleDAO.findAll(); }
+
+    public List<Role> getAllRoles() {
+        return roleDAO.getAllRoles();
+    }
+
+    @Override
+    public Role findById(String id){
+        Optional<Role> roleOptional = roleDAO.findById(id);
+        if(roleOptional.isPresent()) {
+            return Mapper.map(roleOptional.get(), Role.class);
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(String id){
+        Optional<Role> roleOptional = roleDAO.findById(id);
+        if(roleOptional.isPresent()) {
+            Role role = roleOptional.get();
+            role.setIsDeleted(true);
+            roleDAO.save(role);
+        }
     }
 }
 

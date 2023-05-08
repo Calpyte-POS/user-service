@@ -5,6 +5,7 @@ import com.calpyte.user.dao.CapabilitiesDAO;
 import com.calpyte.user.entity.Capabilities;
 import com.calpyte.user.repository.CapabilitiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,5 +31,12 @@ public class CapabilitiesDAOImpl implements CapabilitiesDAO {
     @Override
     public List<Capabilities> getAllCapabilities() {
         return capabilitiesRepository.findAll();
+    }
+
+
+
+    @Override
+    public Optional<Capabilities> findById(String id) {
+        return capabilitiesRepository.findById(id);
     }
 }

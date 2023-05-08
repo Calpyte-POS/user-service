@@ -21,4 +21,6 @@ public interface RoleService {
     TableResponseDTO getRoles(PaginationDTO pagination);
 
     List<Role> findAll();
+
+    List<Role> getAllRoles();
 }

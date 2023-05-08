@@ -1,8 +1,6 @@
 package com.calpyte.user.controller;
 
 
-
-import com.calpyte.user.dto.WarehouseDTO;
 import com.calpyte.user.dto.pagination.PaginationDTO;
 import com.calpyte.user.dto.pagination.TableResponseDTO;
 import com.calpyte.user.entity.Role;
@@ -22,9 +20,30 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @PostMapping("/")
+    @PostMapping("/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
         return ResponseEntity.ok(roleService.saveRole(role));
+    }
+
+    @PostMapping(value = "")
+    public ResponseEntity<TableResponseDTO> getRoles(@RequestBody PaginationDTO pagination){
+        return new ResponseEntity<>(roleService.getRoles(pagination), HttpStatus.ACCEPTED);
+    }
+
+
+    @PostMapping(value = "/save-all")
+    public ResponseEntity<List<Role>> saveAll(@RequestBody List<Role> roles){
+        return new ResponseEntity<>(roleService.saveAllRoles(roles), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value = "/get-all")
+    public ResponseEntity<List<Role>> findAll(){
+        return new ResponseEntity<>(roleService.findAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        return ResponseEntity.ok(roleService.getAllRoles());
     }
 
     @GetMapping(value = "/by-id")
@@ -36,21 +55,6 @@ public class RoleController {
     public ResponseEntity<Role> delete(@RequestParam("id") String id){
         roleService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping(value = "")
-    public ResponseEntity<TableResponseDTO> getRoles(@RequestBody PaginationDTO pagination){
-        return new ResponseEntity<>(roleService.getRoles(pagination), HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping(value = "/save-all")
-    public ResponseEntity<List<Role>> saveAll(@RequestBody List<Role> roles){
-        return new ResponseEntity<>(roleService.saveAllRoles(roles), HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping(value = "/get-all")
-    public ResponseEntity<List<Role>> findAll(){
-        return new ResponseEntity<>(roleService.findAll(),HttpStatus.OK);
     }
 
 }
