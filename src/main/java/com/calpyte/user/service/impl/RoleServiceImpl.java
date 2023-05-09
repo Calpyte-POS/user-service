@@ -51,6 +51,10 @@ public class RoleServiceImpl implements RoleService {
         return roleDAO.save(role);
     }
 
+    @Override
+    public List<Role> saveAllRoles(List<Role> roles) {
+        return roleDAO.saveAll(roles);
+    }
 
 
     @Override
@@ -58,7 +62,7 @@ public class RoleServiceImpl implements RoleService {
         TableResponseDTO response;
         BaseSpecification roleSpecification = new BaseSpecification(mongoTemplate);
         Pageable paging = PageRequest.of(pagination.getPageNo() - 1, pagination.getPageSize());
-        params.clear();
+//        params.clear();
         List<SearchCriteria> searchCriteria = pagination.getFilter();
         Page<Role> rolePage = roleSpecification.getAll(searchCriteria,paging,Role.class);
         if (rolePage.hasContent()) {
@@ -73,24 +77,28 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public List<Role> findAll() {
+        return roleDAO.findAll(); }
+
     public List<Role> getAllRoles() {
         return roleDAO.getAllRoles();
     }
 
     @Override
-    public Role findById(String id) {
+    public Role findById(String id){
         Optional<Role> roleOptional = roleDAO.findById(id);
-        if (roleOptional.isPresent()) {
+        if(roleOptional.isPresent()) {
             return Mapper.map(roleOptional.get(), Role.class);
         }
         return null;
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String id){
         Optional<Role> roleOptional = roleDAO.findById(id);
-        if (roleOptional.isPresent()) {
+        if(roleOptional.isPresent()) {
             Role role = roleOptional.get();
+            role.setIsDeleted(true);
             roleDAO.save(role);
         }
     }

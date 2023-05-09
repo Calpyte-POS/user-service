@@ -40,7 +40,6 @@ public class WarehouseController {
     }
 
 
-
     @PostMapping(value = "")
     public ResponseEntity<TableResponseDTO> getWarehouses(@RequestBody PaginationDTO pagination){
         return new ResponseEntity<>(warehouseService.getWarehouses(pagination), HttpStatus.ACCEPTED);

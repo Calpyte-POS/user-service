@@ -10,11 +10,8 @@ public interface UserService {
 
         User saveUser(User user) ;
 
-        User findById(String id);
-
         Page<User> getAll(Pagination pagination);
 
         public TableResponseDTO getUsers(PaginationDTO pagination);
 
-        void delete(String id);
 }
