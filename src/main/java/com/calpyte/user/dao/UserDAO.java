@@ -9,7 +9,5 @@ public interface UserDAO {
 
     void save(User user);
 
-    Optional<User> findById(String id);
-
     Page findPagination(Pageable pageable);
 }

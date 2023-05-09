@@ -24,8 +24,6 @@ import com.calpyte.user.service.WarehouseService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
@@ -83,7 +81,6 @@ public class WarehouseServiceImpl implements WarehouseService {
         TableResponseDTO response;
         BaseSpecification warehouseSpecification = new BaseSpecification(mongoTemplate);
         Pageable paging = PageRequest.of(pagination.getPageNo() - 1, pagination.getPageSize());
-        params.clear();
         List<SearchCriteria> searchCriteria = pagination.getFilter();
         Page<Warehouse> warehousePage = warehouseSpecification.getAll(searchCriteria,paging,Warehouse.class);
         if (warehousePage.hasContent()) {

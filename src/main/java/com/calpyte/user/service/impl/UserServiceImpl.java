@@ -7,15 +7,20 @@ import com.calpyte.user.dto.pagination.PaginationDTO;
 import com.calpyte.user.dto.pagination.SearchCriteria;
 import com.calpyte.user.dto.pagination.TableResponseDTO;
 import com.calpyte.user.entity.User;
+import com.calpyte.user.entity.Warehouse;
 import com.calpyte.user.repository.UserRepository;
 import com.calpyte.user.service.UserService;
 import com.calpyte.user.util.Mapper;
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,25 +33,31 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     private List<SearchCriteria> params = new ArrayList<>();
 
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
+
+    public UserServiceImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
+
+
 
     @Override
     public User saveUser(User user) {
+        SimpleMailMessage message  = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("User");
+        StringBuilder sb = new StringBuilder();
+        sb.append("name" + user.getUserName());
+        sb.append("firstName" + user.getFirstName());
+        message.setText(sb.toString());
+        javaMailSender.send(message);
         return userRepository.save(user);
     }
-
-    @Override
-    public User findById(String id){
-        Optional<User> userOptional = userRepository.findById(id);
-        if(userOptional.isPresent()) {
-            return Mapper.map(userOptional.get(), User.class);
-        }
-        return null;
-    }
-
-//    public User findById(String id) { return findById(id);}
 
     @Override
     public Page<User> getAll(Pagination pagination) {
@@ -54,21 +65,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(pageable);
     }
 
-    @Override
-    public void delete(String id) {
-        Optional<User> userOpt = userRepository.findById(id);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            userRepository.save(user);
-        }
-    }
+
     @Override
     public TableResponseDTO getUsers(PaginationDTO pagination) {
         TableResponseDTO response;
-        BaseSpecification userSpecification = new BaseSpecification(mongoTemplate);
+        BaseSpecification userSpecificaion = new BaseSpecification(mongoTemplate);
         Pageable paging = PageRequest.of(pagination.getPageNo() - 1, pagination.getPageSize());
         List<SearchCriteria> searchCriteria = pagination.getFilter();
-        Page<User> userPage = userSpecification.getAll(searchCriteria,paging,User.class);
+        Page<User> userPage = userSpecificaion.getAll(searchCriteria,paging,User.class);
         if (userPage.hasContent()) {
             List<User> userList = userPage.getContent();
             response = new TableResponseDTO(0, (int) userPage.getTotalElements(), (int) userPage.getTotalElements(),

@@ -12,11 +12,15 @@ public interface RoleService {
 
     Role saveRole(Role role);
 
-    TableResponseDTO getRoles(PaginationDTO pagination);
-
-    List<Role> getAllRoles();
+    List<Role> saveAllRoles(List<Role> role);
 
     Role findById(String id);
 
     void delete(String id);
+
+    TableResponseDTO getRoles(PaginationDTO pagination);
+
+    List<Role> findAll();
+
+    List<Role> getAllRoles();
 }

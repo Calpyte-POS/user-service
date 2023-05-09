@@ -15,4 +15,6 @@ public interface SubCategoryService {
     Map<String,String> findByCategoryId(String id);
 
     public TableResponseDTO getSubCategories(PaginationDTO pagination);
+
+    List<SubCategory> findByCategory(String id);
 }

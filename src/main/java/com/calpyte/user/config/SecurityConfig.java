@@ -28,12 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .antMatchers("/role/**").permitAll()
-                .antMatchers("/capabilities/**").permitAll()
                 .antMatchers("/warehouse/**").permitAll()
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/capabilities/**").permitAll()
                 .antMatchers("/category/**").permitAll()
                 .antMatchers("/sub-category/**").permitAll()
-                .antMatchers("/adjustment/**").permitAll()
-                .antMatchers("/customSequences/**").permitAll()
+                .antMatchers("/product/**").permitAll()
+                .antMatchers("/inventory/**").permitAll()
                 .anyRequest().authenticated();
     }
 }
