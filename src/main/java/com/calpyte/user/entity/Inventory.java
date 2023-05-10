@@ -9,7 +9,6 @@ public class Inventory {
 
     @Id
     private String id;
-
     private String warehouseId;
     private String productId;
     private Double stock;
