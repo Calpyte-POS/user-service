@@ -16,8 +16,10 @@ public class Adjustment {
     private String id;
     private String warehouse;
     private Date date;
-
     private String  reference;
     @OneToMany(fetch = FetchType.LAZY)
     private List<AdjustmentDetail> adjustmentDetail;
+
+    private Inventory inventory;
+
 }
