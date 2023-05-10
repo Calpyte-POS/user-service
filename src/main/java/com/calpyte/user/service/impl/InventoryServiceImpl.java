@@ -1,6 +1,7 @@
 package com.calpyte.user.service.impl;
 
 import com.calpyte.user.entity.Inventory;
+import com.calpyte.user.exceptions.CustomException;
 import com.calpyte.user.exceptions.CustomValidationException;
 import com.calpyte.user.repository.InventoryRepository;
 import com.calpyte.user.service.InventoryService;
@@ -27,7 +28,7 @@ public class InventoryServiceImpl implements InventoryService {
                 inventoryExist.setPrice(inventory.getPrice());
                 inventoryRepository.save(inventoryExist);
             }
-            else throw  new Exception("No inventory Found");
+            else throw  new CustomException("No inventory Found");
         }
         else{
             inventoryRepository.save(inventory);
