@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.support.PageableExecutionUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.LongSupplier;
 
 public class BaseSpecification<T> {
 
@@ -22,6 +23,7 @@ public class BaseSpecification<T> {
     public Page<T> getAll(List<SearchCriteria> searchCriteriaList, Pageable pageable, Class<T> clazz) {
         List<Criteria> criteria = new ArrayList<>();
         Query query = new Query().with(pageable);
+        Query queryForCount = new Query();
         for (SearchCriteria searchCriteria : searchCriteriaList) {
             if(searchCriteria.getOperation().matches(":")){
                 if (searchCriteria.getKey() != null && !searchCriteria.getKey().isEmpty() && searchCriteria.getValue() != null && !searchCriteria.getValue().toString().isEmpty()) {
@@ -32,11 +34,13 @@ public class BaseSpecification<T> {
         }
         if (!criteria.isEmpty()) {
             query.addCriteria(new Criteria().andOperator(criteria.toArray(new Criteria[criteria.size()])));
+            queryForCount.addCriteria(new Criteria().andOperator(criteria.toArray(new Criteria[criteria.size()])));
         }
         return  PageableExecutionUtils.getPage(
                 mongoTemplate.find(query, clazz),
                 pageable,
-                () -> mongoTemplate.count(query, clazz)
+                () -> mongoTemplate.count(queryForCount,clazz)
         );
     }
+
 }

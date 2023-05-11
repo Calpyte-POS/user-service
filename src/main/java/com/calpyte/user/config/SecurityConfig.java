@@ -34,9 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/category/**").permitAll()
                 .antMatchers("/sub-category/**").permitAll()
                 .antMatchers("/product/**").permitAll()
-                .antMatchers("/inventory/**").permitAll()
-                .antMatchers("/customer/**").permitAll()
-
+                .antMatchers("/upload/**").permitAll()
                 .anyRequest().authenticated();
     }
 }

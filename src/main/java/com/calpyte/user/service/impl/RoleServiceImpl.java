@@ -67,10 +67,10 @@ public class RoleServiceImpl implements RoleService {
         Page<Role> rolePage = roleSpecification.getAll(searchCriteria,paging,Role.class);
         if (rolePage.hasContent()) {
             List<Role> roleList = rolePage.getContent();
-            response = new TableResponseDTO(0, (int) rolePage.getTotalElements(), (int) rolePage.getTotalElements(),
+            response = new TableResponseDTO(0, (int) rolePage.getTotalElements(), (int)  rolePage.getTotalElements(),
                     roleList);
         } else {
-            response = new TableResponseDTO(0, (int) rolePage.getTotalElements(), (int) rolePage.getTotalElements(),
+            response = new TableResponseDTO(0, (int)  rolePage.getTotalElements(), (int)  rolePage.getTotalElements(),
                     new ArrayList<>());
         }
         return response;
