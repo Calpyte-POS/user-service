@@ -30,23 +30,24 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryService.saveSubCategory(subCategory));
     }
 
-    @GetMapping("/by-category")
-    public ResponseEntity<Map<String,String>> findByCategory(@RequestParam("id") String id){
-        return ResponseEntity.ok(subCategoryService.findByCategoryId(id));
-    }
-
+//    @GetMapping("/by-category")
+//    public ResponseEntity<Map<String,String>> findByCategory(@RequestParam("id") String id){
+//        return ResponseEntity.ok(subCategoryService.findByCategoryId(id));
+//    }
     @GetMapping(value = "/delete")
     public ResponseEntity<WarehouseDTO> delete(@RequestParam("id") String id){
         subCategoryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "get-all")
-    public ResponseEntity<List<SubCategory>> findAll() { return new ResponseEntity<>(subCategoryService.findAll(), HttpStatus.OK); }
-
-
     @PostMapping(value = "/getSubCategories")
     public ResponseEntity<TableResponseDTO> getSubCategories(@RequestBody PaginationDTO pagination){
         return new ResponseEntity<>(subCategoryService.getSubCategories(pagination), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/by-category")
+    public ResponseEntity<List<SubCategory>> findByCategory(@RequestParam("id") String id){
+        return ResponseEntity.ok(subCategoryService.findByCategory(id));
+    }
+
 }

@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.persistence.Id;
 
 @Data
-public class Category {
+public class PrimarySequence {
     @Id
     private String id;
     private String name;
-    private String image;
+    private String sequenceId;
 }

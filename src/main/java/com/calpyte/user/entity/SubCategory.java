@@ -38,6 +38,7 @@ public class SubCategory {
 
     private Boolean isDeleted;
 
+
     private Category category;
 
     private String multipleImage;
