@@ -38,9 +38,6 @@ public class SubCategory {
 
     private Boolean isDeleted;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
     private String multipleImage;

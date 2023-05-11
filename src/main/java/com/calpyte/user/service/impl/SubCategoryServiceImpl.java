@@ -1,6 +1,7 @@
 package com.calpyte.user.service.impl;
 
 import com.calpyte.user.Specification.BaseSpecification;
+import com.calpyte.user.dto.Pagination;
 import com.calpyte.user.dto.pagination.PaginationDTO;
 import com.calpyte.user.dto.pagination.SearchCriteria;
 import com.calpyte.user.dto.pagination.TableResponseDTO;
@@ -52,6 +53,15 @@ public class SubCategoryServiceImpl implements SubCategoryService {
             subCategoryRepository.save(subCategory);
         }
     }
+
+    @Override
+    public Page<SubCategory> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.getPage(), pagination.getSize());
+        return subCategoryRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<SubCategory> findAll(){ return subCategoryRepository.findAll(); }
 
     @Override
     public TableResponseDTO getSubCategories(PaginationDTO pagination) {

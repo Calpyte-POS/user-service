@@ -34,11 +34,16 @@ public class SubCategoryController {
     public ResponseEntity<Map<String,String>> findByCategory(@RequestParam("id") String id){
         return ResponseEntity.ok(subCategoryService.findByCategoryId(id));
     }
+
     @GetMapping(value = "/delete")
     public ResponseEntity<WarehouseDTO> delete(@RequestParam("id") String id){
         subCategoryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping(value = "get-all")
+    public ResponseEntity<List<SubCategory>> findAll() { return new ResponseEntity<>(subCategoryService.findAll(), HttpStatus.OK); }
+
 
     @PostMapping(value = "/getSubCategories")
     public ResponseEntity<TableResponseDTO> getSubCategories(@RequestBody PaginationDTO pagination){
